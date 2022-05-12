@@ -49,7 +49,7 @@ init:
 
 ;**	poling for DMA IRQ
 	
-irqtst: btst #5,$fff801	
+irqtst: btst.b #5,$fffa01	
 	beq .print
 
 ;**	Wait Vsync x2
