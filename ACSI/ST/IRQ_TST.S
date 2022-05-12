@@ -48,13 +48,20 @@ init:
 	move.l d0,s_sp
 
 ;**	poling for DMA IRQ
-	
-irqtst: btst.b #5,$fffa01	
-	beq .print
 
-;**	Wait Vsync x2
+	move.l #1,d1	
+irqtst: cmp.l #1,d1
+	beq .clear 
+	bset.b #1,$ff8607 ; GPIP  	
+	move #1,d1
+	jmp .rdy
+.clear:	bclr.b #1,$ff8607
+	move #0,d1
+.rdy:
+;**	Wait 
 
-	move.w #37,-(sp)
+	move.l 250,d0
+.loop:	move.w #37,-(sp)
 	trap #14
 	addq.l #2,sp
 
@@ -66,6 +73,8 @@ irqtst: btst.b #5,$fffa01
 
 	cmp.b #$39,$fffc02
 	beq quit
+
+	dbra d0,.loop
 
 	jmp irqtst
 
