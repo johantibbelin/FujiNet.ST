@@ -50,17 +50,12 @@ init:
 ;**	poling for DMA IRQ
 
 	move.l #1,d1	
-irqtst: cmp.l #1,d1
-	beq .clear 
-	bset.b #1,$ff8607 ; GPIP  	
-	move #1,d1
-	jmp .rdy
-.clear:	bclr.b #1,$ff8607
-	move #0,d1
-.rdy:
+irqtst: btst.b #5,$fffa01
+	beq .print
+
 ;**	Wait 
 
-	move.l 250,d0
+	move.l 2,d0
 .loop:	move.w #37,-(sp)
 	trap #14
 	addq.l #2,sp
@@ -71,7 +66,7 @@ irqtst: cmp.l #1,d1
 
 ;**	Test for space
 
-	cmp.b #$39,$fffc02
+.tstkey:cmp.b #$39,$fffc02
 	beq quit
 
 	dbra d0,.loop
@@ -82,7 +77,7 @@ irqtst: cmp.l #1,d1
 	move.w #9,-(sp)
 	trap #1
 	addq.l #6,sp	
-	jmp irqtst
+	jmp .tstkey
 
 quit:
 
