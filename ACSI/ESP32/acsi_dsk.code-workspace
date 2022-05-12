@@ -3,6 +3,10 @@
         {
             "name": "ACSI2ESP32",
             "path": "ACSI2ESP32"
+        },
+        {
+            "name": "ESP32 first",
+            "path": "../../../../../../../../Documents/PlatformIO/Projects/ESP32 first"
         }
     ]
 }
