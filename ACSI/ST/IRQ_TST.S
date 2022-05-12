@@ -1,7 +1,7 @@
 ;------------------------------------
 ; 	Acsi2esp32
 ;
-;  Smal test program, that tests:
+;  Small test program, that tests:
 ;
 ;	-IRQ signal
 ;	-Data request (DRQ)
@@ -47,12 +47,45 @@ init:
 	addq.l #6,sp
 	move.l d0,s_sp
 
-;**	Setup MFP interrupt
+;**	poling for DMA IRQ
+	
+irqtst: btst #5,$fff801	
+	beq .print
 
-;**	Interrupt routine
+;**	Wait Vsync x2
 
-inter:	rte
+	move.w #37,-(sp)
+	trap #14
+	addq.l #2,sp
 
+	move.w #37,-(sp)
+	trap #14
+	addq.l #2,sp
+
+;**	Test for space
+
+	cmp.b #$39,$fffc02
+	beq quit
+
+	jmp irqtst
+
+.print:	move.l #text,-(sp)
+	move.w #9,-(sp)
+	trap #1
+	addq.l #6,sp	
+	jmp irqtst
+
+quit:
+
+;**	Enter user mode and quit
+
+	move.l s_sp,-(sp)
+	move.w #$20,-(sp)
+	trap #1
+	addq.l #6,sp
+
+	move.w #0,-(sp)
+	trap #1
 
 ;----------------------------------------
 ; Variables etc
@@ -60,3 +93,4 @@ inter:	rte
 
 ;**	User stack pointer
 s_sp:	ds.l 1
+text:	dc.b "DMA IRQ detected.",10,13,0
