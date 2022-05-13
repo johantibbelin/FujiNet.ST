@@ -49,29 +49,30 @@ init:
 
 ;**	poling for DMA IRQ
 
-	move.l #1,d1	
-irqtst: btst.b #5,$fffa01
-	beq .print
+;	move.l #1,d1	
+irqtst: move.w #256,$ff8606
+;	btst.b #5,$fffa01
+;	beq .print
 
 ;**	Wait 
 
-	move.l 2,d0
-.loop:	move.w #37,-(sp)
-	trap #14
-	addq.l #2,sp
+;	move.l 2,d0
+;.loop:	move.w #37,-(sp)
+;	trap #14
+;	addq.l #2,sp
 
-	move.w #37,-(sp)
-	trap #14
-	addq.l #2,sp
+;	move.w #37,-(sp)
+;	trap #14
+;	addq.l #2,sp
 
 ;**	Test for space
 
 .tstkey:cmp.b #$39,$fffc02
 	beq quit
 
-	dbra d0,.loop
+;       dbra d0,.loop
 
-	jmp irqtst
+	jmp .tstkey
 
 .print:	move.l #text,-(sp)
 	move.w #9,-(sp)
