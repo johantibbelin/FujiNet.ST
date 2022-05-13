@@ -77,6 +77,8 @@ irqtst: btst.b #5,$fffa01
 	move.w #9,-(sp)
 	trap #1
 	addq.l #6,sp	
+.wait:  btst.b #5,$fffa01
+	bne .wait
 	jmp .tstkey
 
 quit:
