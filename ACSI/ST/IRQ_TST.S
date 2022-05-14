@@ -28,6 +28,7 @@ gpip	= $fffa01
 dma_lo	= $ff860d
 dma_mid = $ff860b
 dma_hi	= $ff8609	
+dma_bit = 5
 
 ;----
 ;	Floppy and drives
