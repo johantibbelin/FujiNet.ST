@@ -1,7 +1,7 @@
 	clr.l -(sp)
 	move.w #$20,-(sp)
 	trap #1
-	addq,l #6,sp
+	addq.l #6,sp
 	move.l d0,s_sp
 
 start:	move.w #$198,$ff8606
@@ -19,7 +19,7 @@ quit:	move.l s_sp,-(sp)
 	trap #1
 
 
-wait:	move #50,d0
+wait:	move #100,d0
 .loop:	move.w #$25,-(sp)
 	trap #14
 	addq.l #2,sp
@@ -29,3 +29,4 @@ wait:	move #50,d0
 	dbra d0,.loop
 	rts
 
+s_sp:	ds.l 1
