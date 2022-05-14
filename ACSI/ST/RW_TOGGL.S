@@ -4,13 +4,16 @@
 	addq.l #6,sp
 	move.l d0,s_sp
 
-start:	move.w #$198,$ff8606
+start:  move.w #88,$43e ;floc
+
+	move.w #$198,$ff8606
 	bsr wait
 	move.w #$98,$ff8606
 	bsr wait
 	jmp start
 
-quit:	move.l s_sp,-(sp)
+quit:	move.w #0,$43e
+	move.l s_sp,-(sp)
 	move.w #$20,-(sp)
 	trap #1
 	addq.l #6,sp
