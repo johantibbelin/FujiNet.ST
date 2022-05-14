@@ -14,6 +14,34 @@
 ; Begun: 2022-05-12
 ;-------------------------------------
 
+;****
+;	EQUs
+;
+;---
+;	dma
+;
+floc 	= $43e
+hz200	= $4ba
+dma	= $ff8606
+data	= $ff8604
+gpip	= $fffa01
+dma_lo	= $ff860d
+dma_mid = $ff860b
+dma_hi	= $ff8609	
+
+;----
+;	Floppy and drives
+;
+bootdev	= $446
+hdv_init= $46a
+hdv_bpb	= $472
+hdv_rw	= $476
+hdv_boot= $47a
+drvbits	= $4c2
+
+;*****
+;	Program start
+
 init:
 
 
