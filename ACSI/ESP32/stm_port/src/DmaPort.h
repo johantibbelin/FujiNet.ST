@@ -19,11 +19,11 @@
 #define DMA_PORT_H
 
 struct DmaPort {
-  static const int A1 = PB6; // Must be on port B
-  static const int CS = PB7; // Must be on port B
-  static const int IRQ = PA8;
-  static const int DRQ = PA11; // Must be on Timer1 channel output
-  static const int ACK = PA12; // Must be on Timer1 external clock
+  static const int A1 = ARF; // Must be on port B
+  static const int CS = 11; // Must be on port B
+  static const int IRQ = 12;
+  static const int DRQ = 13; // Must be on Timer1 channel output
+  static const int ACK = 14; // Must be on Timer1 external clock
   // Data pins are on PB8-PB15
 
   // Pin masks for direct port access

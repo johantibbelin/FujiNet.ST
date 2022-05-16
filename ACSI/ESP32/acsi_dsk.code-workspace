@@ -11,6 +11,10 @@
         {
             "name": "stm_port",
             "path": "stm_port"
+        },
+        {
+            "name": "ESP32 first",
+            "path": "ESP32 first"
         }
     ]
 }

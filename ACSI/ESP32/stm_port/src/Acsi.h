@@ -19,14 +19,14 @@
 #define ACSI_H
 
 #include <Arduino.h>
-//#include <SdFat.h>
+#include <SdFat.h>
 #include "acsi2stm.h"
 #include "AcsiDebug.h"
 #include "Watchdog.h"
 #include "DmaPort.h"
-//#include "BlockDev.h"
+#include "BlockDev.h"
 #if ACSI_RTC
-//#include <RTClock.h>
+#include <RTClock.h>
 #endif
 
 // ACSI protocol block size

@@ -19,7 +19,9 @@
 #include "DmaPort.h"
 #include "Watchdog.h"
 #include "Acsi.h"
-#include <libmaple/gpio.h>
+
+// Setup GPIO in another way (main.cpp).
+//#include <libmaple/gpio.h>
 
 DmaPort dma;
 Watchdog watchdog;
