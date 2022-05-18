@@ -23,3 +23,60 @@ gpio	= $fffffa01
 ;****	Program start
 
 start:
+
+	move.l 4(sp),a5
+	move.l $0c(a5),d0
+	add.l $14(a5),d0
+	add.l $1c(a5),d0
+	add.l #$1000,d0
+	add.l #$100,d0
+	move.l a5,d1
+	add.l d0,d1
+
+	and.l #-2,d1
+
+	move.l d1,sp
+	move.l d0,-(sp)
+	move.l a5,-(sp)
+	move.w d0,-(sp)
+	move.w #$4a,-(sp)
+	trap #1
+	lea 12(sp),sp
+
+;**	Enter supervisor mode
+
+	clr.l -(sp)
+	move.w #$20,-(sp)
+	trap #1
+	addq.l #6,sp
+	move.l d0,s_sp
+
+;**	Print start message
+
+	move.l #start_txt,-(sp)
+	move.w #9,-(sp)
+	trap #1
+	addq.l #6,sp
+
+;	wait key
+	
+nej	cmp.b #$39,$fffc02
+	bne nej
+
+;	leave supervisor mode	
+
+	move.l s_sp,-(sp)
+	move.w #$20,-(sp)
+	trap #1
+	addq.l #6,sp
+
+;***	quit
+
+	move.w #0,-(sp)
+	trap #1
+
+;****	Data etc
+
+start_txt:
+	dc.b 27,'E',"ACSI packet send test",10,13
+s_sp:	ds.l 1
