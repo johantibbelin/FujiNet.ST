@@ -83,4 +83,8 @@ send_txt:
 	dc.b 10,13,"Byte sent.",10,13,0
 irq_txt:
 	dc.b 10,13,"IRQ recived.",10,13,0
+packs_txt:
+	dc.b 10,13,"Packet sent.",10,13,0
+packr_txt:
+	dc.b 10,13,"Packet recived.",10,13,0
 s_sp:	ds.l 1
