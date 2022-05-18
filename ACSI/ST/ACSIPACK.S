@@ -78,5 +78,9 @@ nej	cmp.b #$39,$fffc02
 ;****	Data etc
 
 start_txt:
-	dc.b 27,'E',"ACSI packet send test",10,13
+	dc.b 27,'E',"ACSI packet send test",10,13,0
+send_txt:
+	dc.b 10,13,"Byte sent.",10,13,0
+irq_txt:
+	dc.b 10,13,"IRQ recived.",10,13,0
 s_sp:	ds.l 1
