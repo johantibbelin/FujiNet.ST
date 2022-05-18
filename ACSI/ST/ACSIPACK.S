@@ -66,13 +66,19 @@ start:
 	move.w #$190,dma
 
 	move.w #$88,dma ;A1 = 0
-	move.b #0,dmadata
+	move.w #0,dmadata
 
+	move.l #send_txt,-(sp)
+	move.w #9,-(sp)
+	trap #1
+	addq.l #6,sp
 
 ;	wait key
 	
 nej	cmp.b #$39,$fffc02
 	bne nej
+
+	sf flock ; Enable fdc again
 
 ;	leave supervisor mode	
 
