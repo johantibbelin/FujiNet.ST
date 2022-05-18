@@ -58,6 +58,17 @@ start:
 	trap #1
 	addq.l #6,sp
 
+	st flock ; disable fdc
+
+;**	Reset dma - toggle
+
+	move.w #$090,dma
+	move.w #$190,dma
+
+	move.w #$88,dma ;A1 = 0
+	move.b #0,dmadata
+
+
 ;	wait key
 	
 nej	cmp.b #$39,$fffc02
