@@ -62,11 +62,12 @@ start:
 
 ;**	Reset dma - toggle
 
+	move.w #$190,dma
 	move.w #$090,dma
 	move.w #$190,dma
 
 	move.w #$88,dma ;A1 = 0
-	move.w #0,dmadata
+	move.w #$ffff,dmadata
 
 	move.l #send_txt,-(sp)
 	move.w #9,-(sp)
