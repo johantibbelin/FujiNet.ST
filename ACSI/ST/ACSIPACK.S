@@ -62,12 +62,25 @@ start:
 
 ;**	Reset dma - toggle
 
-;	move.w #$190,dma
 	move.w #$090,dma
 	move.w #$190,dma
 
+	movea.l #buffer,a0
+	move.l a0,d0
+	move.b d0,dmaadrlo
+	lsr.l #8,d0
+	move.b d0,dmaadrmi
+	lsr.l #8,d0
+	move.b d0,dmaadrhi
+
+	move.w #1,dmadata
+	move.w #$188,dma
+
+	move.w #$AAAA,dmadata
+	move.w #$18a,dma
+ 
 ;	move.w #$88,dma ;A1 = 0
-	move.l #$0000008a,dmadata
+;	move.l #$0000008a,dmadata
 
 	move.l #send_txt,-(sp)
 	move.w #9,-(sp)
@@ -106,3 +119,4 @@ packs_txt:
 packr_txt:
 	dc.b 10,13,"Packet recived.",10,13,0
 s_sp:	ds.l 1
+buffer:	ds.b 1024
