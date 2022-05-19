@@ -8,9 +8,9 @@
 
 dma 	= $ff8606
 dmadata	= $ff8604
-dmaadrhi= $ffff8609
-dmaadrmi= $ffff860b
-dmaadrlo= $ffff860d
+dmaadrhi= $ff8609
+dmaadrmi= $ff860b
+dmaadrlo= $ff860d
 flock	= $43e
 hz200	= $4ba
 hdv_bpb	= $472
@@ -18,7 +18,7 @@ hdv_rw	= $476
 hdv_boot= $47a
 hdv_init= $46a
 drv_bits= $4c2
-gpio	= $fffffa01
+gpio	= $fffa01
 
 ;****	Program start
 

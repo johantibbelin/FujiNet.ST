@@ -6,13 +6,14 @@
 
 start:  move.w #88,$43e ;floc
 
-	move.w #$190,$ff8606
-	move.w #$90,$ff8606
-	move.w #$190,$ff8606
+	move.w #$188,$ff8606
+	move.w #$88,$ff8606
+	move.w #$188,$ff8606
 	bsr wait
-	move.w #$90,$ff8606
-	move.w #$190,$ff8606
-	move.w #$90,$ff8606
+	move.l #$ffffffff,$ff8604
+;	move.w #$88,$ff8606
+;	move.w #$190,$ff8606
+;	move.w #$90,$ff8606
 	bsr wait
 	jmp start
 
