@@ -6,8 +6,8 @@
 
 ;***	EQUs
 
-dma 	= $ffff8606
-dmadata	= $ffff8604
+dma 	= $ff8606
+dmadata	= $ff8604
 dmaadrhi= $ffff8609
 dmaadrmi= $ffff860b
 dmaadrlo= $ffff860d
@@ -62,12 +62,12 @@ start:
 
 ;**	Reset dma - toggle
 
-	move.w #$190,dma
+;	move.w #$190,dma
 	move.w #$090,dma
 	move.w #$190,dma
 
-	move.w #$88,dma ;A1 = 0
-	move.w #$ffff,dmadata
+;	move.w #$88,dma ;A1 = 0
+	move.l #$0000008a,dmadata
 
 	move.l #send_txt,-(sp)
 	move.w #9,-(sp)
