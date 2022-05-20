@@ -73,11 +73,11 @@ start:
 ;	lsr.l #8,d0
 ;	move.b d0,dmaadrhi
 
-	move.l #$011011aa,dmadata
+	move.l #$011011ff,dmadata
 	move.w #$188,dma
 
-	move.w #$AAAA,dmadata
-	move.w #$18a,dma
+;	move.w #$AAAA,dmadata
+; 	move.w #$18a,dma
  
 ;	move.w #$88,dma ;A1 = 0
 ;	move.l #$0000008a,dmadata
