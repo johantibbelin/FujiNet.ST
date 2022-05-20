@@ -65,15 +65,15 @@ start:
 	move.w #$090,dma
 	move.w #$190,dma
 
-	movea.l #buffer,a0
-	move.l a0,d0
-	move.b d0,dmaadrlo
-	lsr.l #8,d0
-	move.b d0,dmaadrmi
-	lsr.l #8,d0
-	move.b d0,dmaadrhi
+;	movea.l #buffer,a0
+;	move.l a0,d0
+;	move.b d0,dmaadrlo  
+;	lsr.l #8,d0
+;	move.b d0,dmaadrmi
+;	lsr.l #8,d0
+;	move.b d0,dmaadrhi
 
-	move.w #1,dmadata
+	move.l #$011011aa,dmadata
 	move.w #$188,dma
 
 	move.w #$AAAA,dmadata
