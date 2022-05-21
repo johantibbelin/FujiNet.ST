@@ -82,6 +82,8 @@ start:
 ;	move.w #$88,dma ;A1 = 0
 ;	move.l #$0000008a,dmadata
 
+;**	write text
+
 	move.l #send_txt,-(sp)
 	move.w #9,-(sp)
 	trap #1
