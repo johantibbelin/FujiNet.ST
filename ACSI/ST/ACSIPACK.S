@@ -65,22 +65,8 @@ start:
 	move.w #$090,dma
 	move.w #$190,dma
 
-;	movea.l #buffer,a0
-;	move.l a0,d0
-;	move.b d0,dmaadrlo  
-;	lsr.l #8,d0
-;	move.b d0,dmaadrmi
-;	lsr.l #8,d0
-;	move.b d0,dmaadrhi
-
 	move.l #$011011ff,dmadata
 	move.w #$188,dma
-
-;	move.w #$AAAA,dmadata
-; 	move.w #$18a,dma
- 
-;	move.w #$88,dma ;A1 = 0
-;	move.l #$0000008a,dmadata
 
 ;**	write text
 
@@ -89,7 +75,7 @@ start:
 	trap #1
 	addq.l #6,sp
 
-;	wait key
+;**	wait key
 	
 nej	cmp.b #$39,$fffc02
 	bne nej
