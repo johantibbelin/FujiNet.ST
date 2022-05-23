@@ -18,7 +18,7 @@ hdv_rw	= $476
 hdv_boot= $47a
 hdv_init= $46a
 drv_bits= $4c2
-gpio	= $fffa01
+gpip	= $fffa01
 
 ;****	Program start
 
@@ -65,15 +65,39 @@ start:
 	move.w #$090,dma
 	move.w #$190,dma
 
-	move.l #$011011ff,dmadata
-	move.w #$188,dma
-
+	move.w #$88,dma
+	move.l $0000008a,dmadata
 ;**	write text
 
 	move.l #send_txt,-(sp)
 	move.w #9,-(sp)
 	trap #1
 	addq.l #6,sp
+
+;**	Wait ack
+
+	moveq.l #2,d1
+	add.l hz200,d1
+
+del20mic:cmp.l hz200,d1
+	bge del20mic
+
+	move.l #600,d1
+	add.l hz200,d1
+
+del3sec:btst.b #5,gpip
+	beq exit
+	cmp.l hz200,d1
+	bge del3sec
+
+	moveq.l #-1,d0
+
+	move.l #timeout_txt,-(sp)
+	move.w #9,-(sp)
+	trap #1
+	addq.l #6,sp
+
+exit:
 
 ;**	wait key
 	
@@ -106,5 +130,7 @@ packs_txt:
 	dc.b 10,13,"Packet sent.",10,13,0
 packr_txt:
 	dc.b 10,13,"Packet recived.",10,13,0
+timeout_txt:
+	dc.b 10,13,"Timout, ack not recieved.",10,13,0 
 s_sp:	ds.l 1
 buffer:	ds.b 1024
