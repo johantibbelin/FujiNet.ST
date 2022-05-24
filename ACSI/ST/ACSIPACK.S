@@ -66,7 +66,7 @@ start:
 	move.w #$190,dma
 
 	move.w #$88,dma
-	move.l $0000008a,dmadata
+	move.w $008a,dmadata
 ;**	write text
 
 	move.l #send_txt,-(sp)
