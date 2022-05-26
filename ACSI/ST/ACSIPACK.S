@@ -109,8 +109,19 @@ exit:
 	swap d7
 	sub.w #1,d7
 	swap d7
+	move.l #irq_txt,-(sp)
+	move.w #9,-(sp)
+	trap #1
+	addq.l #6,sp
+
 waitlo:	btst.b #5,gpip
 	bne waitlo
+
+	move.l #irq_res,-(sp)
+	move.w #9,-(sp)
+	trap #1
+	addq.l #6,sp
+
 ;	dbra d6,write
 
 ;**	wait key
@@ -140,11 +151,13 @@ send_txt:
 	dc.b 10,13,"Byte sent.",10,13,0
 irq_txt:
 	dc.b 10,13,"IRQ recived.",10,13,0
+irq_res:
+	dc.b 10,13,"IRQ restored.",10,13,0
 packs_txt:
 	dc.b 10,13,"Packet sent.",10,13,0
 packr_txt:
 	dc.b 10,13,"Packet recived.",10,13,0
 timeout_txt:
-	dc.b 10,13,"Timout, ack not recieved.",10,13,0 
+	dc.b 10,13,"Timeout, ack not recieved.",10,13,0 
 s_sp:	ds.l 1
 buffer:	ds.b 1024
