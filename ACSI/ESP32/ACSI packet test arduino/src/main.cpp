@@ -84,7 +84,7 @@ void loop() {
  Serial.println(data);
  //Serial.println(digitalRead(RW));
  //Serial.println(digitalRead(CS));
- delay(1000);
+ //delay(1000);
  digitalWrite(2, HIGH);
  }
 }

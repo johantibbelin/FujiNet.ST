@@ -122,7 +122,11 @@ waitlo:	btst.b #5,gpip
 	trap #1
 	addq.l #6,sp
 
-;	dbra d6,write
+	move.l #20,d1
+	add.l hz200,d1
+.w2:	cmp.l hz200,d1
+	bge .w2
+	dbra d6,write
 
 ;**	wait key
 	
