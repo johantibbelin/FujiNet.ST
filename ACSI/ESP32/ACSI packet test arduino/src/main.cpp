@@ -24,7 +24,20 @@
 //* Non ACSI PINs
 #define LED 23
 
+//*** Variables
+uint8_t data = 0;
 
+
+//** Functions
+uint8_t read_dataport() {
+  uint8_t dport[] = {D0, D1, D2, D3 ,D4 ,D5, D6, D7};  
+  uint8_t d=0;
+  for (int i=0;i<8;i++) {
+    d = d | (digitalRead(dport[i]) << i);
+  }
+
+  return d;
+}
 void setup() {
   // Setup serial
   Serial.begin(9600);
@@ -63,4 +76,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+ data = read_dataport();
+ Serial.println(data);
+ delay(250); 
 }
