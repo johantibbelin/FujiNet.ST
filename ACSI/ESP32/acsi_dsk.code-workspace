@@ -15,6 +15,10 @@
         {
             "name": "ESP32 first",
             "path": "ESP32 first"
+        },
+        {
+            "name": "ACSI packet test arduino",
+            "path": "ACSI packet test arduino"
         }
     ]
 }
