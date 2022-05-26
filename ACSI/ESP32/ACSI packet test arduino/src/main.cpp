@@ -82,9 +82,9 @@ void loop() {
  data = read_dataport();
  digitalWrite(2, LOW);
  Serial.println(data);
- Serial.println(digitalRead(RW));
- Serial.println(digitalRead(CS));
- delay(250);
+ //Serial.println(digitalRead(RW));
+ //Serial.println(digitalRead(CS));
+ delay(1000);
  digitalWrite(2, HIGH);
  }
 }

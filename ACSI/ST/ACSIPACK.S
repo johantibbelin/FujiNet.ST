@@ -64,12 +64,15 @@ start:
 	move.l d6,d7
 ;**	Reset dma - toggle
 
-	move.w #$088,dma
-	move.w #$188,dma
-write:
-;**	write data ($ff)
+	swap d7
+	move.w #$188,d7
 
-	move.w d6,dmadata
+write:	move.w #$088,dma
+	move.w #$188,dma
+
+;**	write data ($ff)
+;	move.w #$18a,dma
+	move.l d7,dmadata
 
 ;**	write text
 
@@ -103,7 +106,12 @@ del3sec:btst.b #5,gpip
 	jmp nej
 
 exit:	
-	dbra d7,write
+	swap d7
+	sub.w #1,d7
+	swap d7
+waitlo:	btst.b #5,gpip
+	bne waitlo
+;	dbra d6,write
 
 ;**	wait key
 	
