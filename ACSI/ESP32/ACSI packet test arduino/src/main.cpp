@@ -30,10 +30,20 @@ void setup() {
   Serial.begin(9600);
   
   //** Setup pins
-  pinMode(LED, OUTPUT);
+
+  //* PINs always in input mode
   pinMode(ST_RESET, INPUT);  
+  pinMode(RW, INPUT);
+  pinMode(CS, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(ACK, INPUT);
+
+//* PINs always in output mode
+  pinMode(LED, OUTPUT);
   pinMode(IRQ, OUTPUT);
+  pinMode(HDRQ,OUTPUT);
   
+  //* Data PINs (Starts as input)
   pinMode(D0, INPUT);
   pinMode(D1, INPUT);
   pinMode(D2, INPUT);
@@ -42,10 +52,12 @@ void setup() {
   pinMode(D5, INPUT);
   pinMode(D6, INPUT);
   pinMode(D7, INPUT);
-  pinMode(RW, INPUT);
-  pinMode(12, OUTPUT);
 
+
+  // Turn off LED
   digitalWrite(LED, LOW);
+  
+  //Set IRQ high (active low)
   digitalWrite(IRQ, HIGH); 
 }
 
