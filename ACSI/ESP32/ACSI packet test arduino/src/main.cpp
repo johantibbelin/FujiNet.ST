@@ -15,8 +15,8 @@
 #define D0 13
 #define D1 14
 #define D2 15
-#define D3 16
-#define D4 17
+#define D3 12
+#define D4 32
 #define D5 18
 #define D6 19
 #define D7 21
@@ -65,18 +65,26 @@ void setup() {
   pinMode(D5, INPUT);
   pinMode(D6, INPUT);
   pinMode(D7, INPUT);
-
+  pinMode(2, OUTPUT);
 
   // Turn off LED
   digitalWrite(LED, LOW);
   
   //Set IRQ high (active low)
-  digitalWrite(IRQ, HIGH); 
+  digitalWrite(2, HIGH); 
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+ 
+ //poling for CS
+ if (digitalRead(CS) == LOW) {
  data = read_dataport();
+ digitalWrite(2, LOW);
  Serial.println(data);
- delay(250); 
+ Serial.println(digitalRead(RW));
+ Serial.println(digitalRead(CS));
+ delay(250);
+ digitalWrite(2, HIGH);
+ }
 }

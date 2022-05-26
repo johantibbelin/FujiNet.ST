@@ -60,13 +60,17 @@ start:
 
 	st flock ; disable fdc
 
+	move.l #255,d6
+	move.l d6,d7
 ;**	Reset dma - toggle
 
-	move.w #$090,dma
-	move.w #$190,dma
+	move.w #$088,dma
+	move.w #$188,dma
+write:
+;**	write data ($ff)
 
-	move.w #$88,dma
-	move.w $008a,dmadata
+	move.w d6,dmadata
+
 ;**	write text
 
 	move.l #send_txt,-(sp)
@@ -96,8 +100,10 @@ del3sec:btst.b #5,gpip
 	move.w #9,-(sp)
 	trap #1
 	addq.l #6,sp
+	jmp nej
 
-exit:
+exit:	
+	dbra d7,write
 
 ;**	wait key
 	
