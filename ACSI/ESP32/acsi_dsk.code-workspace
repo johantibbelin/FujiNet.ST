@@ -19,6 +19,10 @@
         {
             "name": "ACSI packet test arduino",
             "path": "ACSI packet test arduino"
+        },
+        {
+            "name": "ACSI_packet_test",
+            "path": "ACSI_packet_test"
         }
     ]
 }
