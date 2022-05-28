@@ -1,6 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <esp_system.h>
+#include <nvs_flash.h>
+#include <esp32/spiram.h>
+#include <esp32/himem.h>
 
 //* Signal PINs
 #define IRQ 35
@@ -29,4 +30,11 @@ static uint8_t data_bus_pins[] = {D0, D1, D2,D3, D4, D5, D6, D7};
 
 void main_setup() {}
 
-void app_main() {}
+extern "C" {
+
+void app_main() {
+
+    main_setup();
+
+}
+}

@@ -23,6 +23,10 @@
         {
             "name": "ACSI_packet_test",
             "path": "ACSI_packet_test"
+        },
+        {
+            "name": "fujinet-platformio",
+            "path": "../../../../../../../../git/fujinet-platformio"
         }
     ]
 }
