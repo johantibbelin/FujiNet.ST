@@ -14,3 +14,8 @@ $ff8606 - dma
 
 # Interrups
 Interrupts on the ESP32 on signals _CS, R/_W and _ACK
+
+# IDs
+Fujinet id0
+Netdevice id1
+Printer id2
