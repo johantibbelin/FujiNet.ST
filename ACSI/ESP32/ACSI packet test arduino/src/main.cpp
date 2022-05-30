@@ -26,7 +26,7 @@
 
 //*** Variables
 uint8_t data = 0;
-
+uint8_t last_data = 0;
 
 //** Functions
 uint8_t read_dataport() {
@@ -37,6 +37,17 @@ uint8_t read_dataport() {
   }
 
   return d;
+}
+void send_irq() {
+  digitalWrite(IRQ, LOW);
+  delay(50);
+  digitalWrite(IRQ,HIGH);
+}
+
+void IRAM_ATTR cs_interrupt() {
+  last_data = read_dataport();
+  delay(100);
+  send_irq();
 }
 void setup() {
   // Setup serial
@@ -65,19 +76,22 @@ void setup() {
   pinMode(D5, INPUT);
   pinMode(D6, INPUT);
   pinMode(D7, INPUT);
-  pinMode(2, OUTPUT);
+ // pinMode(2, OUTPUT);
 
   // Turn off LED
   digitalWrite(LED, LOW);
   
   //Set IRQ high (active low)
   digitalWrite(2, HIGH); 
+// setup interrupt
+attachInterrupt(CS, cs_interrupt, FALLING);
+
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
  
- //poling for CS
+ /*//poling for CS
  if (digitalRead(CS) == LOW) {
  data = read_dataport();
  digitalWrite(2, LOW);
@@ -86,5 +100,8 @@ void loop() {
  //Serial.println(digitalRead(CS));
  delay(100);
  digitalWrite(2, HIGH);
- }
+ }*/
+ Serial.print("Last byte:");
+ Serial.println(last_data);
+ delay(2000);
 }

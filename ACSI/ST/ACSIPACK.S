@@ -58,7 +58,7 @@ start:
 	trap #1
 	addq.l #6,sp
 
-	st flock ; disable fdc
+ 	st flock ; disable fdc
 
 	move.l #255,d6
 	move.l d6,d7
