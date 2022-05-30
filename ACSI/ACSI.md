@@ -19,3 +19,5 @@ Interrupts on the ESP32 on signals _CS, R/_W and _ACK
 Fujinet id0
 Netdevice id1
 Printer id2
+# boot
+Bootsector --> loads fujinet.sys from C: drive.
