@@ -47,7 +47,7 @@ void IRAM_ATTR cs_interrupt() {
   last_data = read_dataport();
   //delay(10);
   digitalWrite(IRQ, LOW);
-  //delay(100);
+  delayMicroseconds(30000);
   digitalWrite(IRQ, HIGH);
 }
 void setup() {
