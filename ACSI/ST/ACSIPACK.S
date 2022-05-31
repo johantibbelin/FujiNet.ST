@@ -67,19 +67,20 @@ start:
 	swap d7
 	move.w #$188,d7
 
-write:	move.w #$088,dma
-	move.w #$188,dma
-
-;**	write data ($ff)
-;	move.w #$18a,dma
-	move.l d7,dmadata
-
+write:
 ;**	write text
 
 	move.l #send_txt,-(sp)
 	move.w #9,-(sp)
 	trap #1
 	addq.l #6,sp
+
+	move.w #$088,dma
+	move.w #$188,dma
+
+;**	write data ($ff)
+;	move.w #$18a,dma
+	move.l d7,dmadata
 
 ;**	Wait ack
 
@@ -114,8 +115,8 @@ exit:
 	trap #1
 	addq.l #6,sp
 
-waitlo:	btst.b #5,gpip
-	bne waitlo
+;waitlo:	btst.b #5,gpip
+;	bne waitlo
 
 	move.l #irq_res,-(sp)
 	move.w #9,-(sp)
