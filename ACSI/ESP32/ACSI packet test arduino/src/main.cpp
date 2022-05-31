@@ -3,7 +3,7 @@
 //** PIN defines
 
 //* Signal PINs
-#define IRQ 35
+#define IRQ 5
 #define CS 34
 #define HDRQ 33
 #define ACK 27
@@ -40,14 +40,15 @@ uint8_t read_dataport() {
 }
 void send_irq() {
   digitalWrite(IRQ, LOW);
-  delay(50);
-  digitalWrite(IRQ,HIGH);
+  
 }
 
 void IRAM_ATTR cs_interrupt() {
   last_data = read_dataport();
-  delay(100);
-  send_irq();
+  delay(10);
+  digitalWrite(IRQ, LOW);
+  //delay(5);
+  digitalWrite(IRQ, HIGH);
 }
 void setup() {
   // Setup serial
@@ -66,6 +67,9 @@ void setup() {
   pinMode(LED, OUTPUT);
   pinMode(IRQ, OUTPUT);
   pinMode(HDRQ,OUTPUT);
+  // Set low in order to not rearange board.
+  pinMode(35,OUTPUT);
+  digitalWrite(35, LOW);
   
   //* Data PINs (Starts as input)
   pinMode(D0, INPUT);
@@ -76,13 +80,13 @@ void setup() {
   pinMode(D5, INPUT);
   pinMode(D6, INPUT);
   pinMode(D7, INPUT);
- // pinMode(2, OUTPUT);
+  pinMode(IRQ, OUTPUT);
 
   // Turn off LED
   digitalWrite(LED, LOW);
   
   //Set IRQ high (active low)
-  digitalWrite(2, HIGH); 
+  digitalWrite(IRQ, HIGH); 
 // setup interrupt
 attachInterrupt(CS, cs_interrupt, FALLING);
 
