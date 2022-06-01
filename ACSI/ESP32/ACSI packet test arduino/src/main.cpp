@@ -27,7 +27,7 @@
 //*** Variables
 uint8_t data = 0;
 uint8_t last_data = 0;
-
+int8_t last_a1 = -1;
 //** Functions
 uint8_t read_dataport() {
   uint8_t dport[] = {D0, D1, D2, D3 ,D4 ,D5, D6, D7};  
@@ -45,7 +45,7 @@ void send_irq() {
 
 void IRAM_ATTR cs_interrupt() {
   last_data = read_dataport();
-  //delay(10);
+  last_a1 = digitalRead(A1);
   digitalWrite(IRQ, LOW);
   delayMicroseconds(15000);
   digitalWrite(IRQ, HIGH);
@@ -107,5 +107,9 @@ void loop() {
  }*/
  Serial.print("Last byte:");
  Serial.println(last_data);
+ if (last_a1 != -1) {
+   Serial.print("Last A1:");
+   Serial.println(last_a1);
+ }
  delay(2000);
 }
