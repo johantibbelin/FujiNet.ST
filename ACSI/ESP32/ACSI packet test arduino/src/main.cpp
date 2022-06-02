@@ -24,11 +24,23 @@
 //* Non ACSI PINs
 #define LED 23
 
+/**
+ * IRQ delay
+ * Delay between IRQ going low and then high again (in microseconds).
+ */
+#define IRQ_DELAY 15000
+
 //*** Variables
 uint8_t data = 0;
 uint8_t last_data = 0;
 int8_t last_a1 = -1;
 //** Functions
+
+/**
+ * @brief reads the ACSI data bus
+ * 
+ * @return uint8_t 
+ */
 uint8_t read_dataport() {
   uint8_t dport[] = {D0, D1, D2, D3 ,D4 ,D5, D6, D7};  
   uint8_t d=0;
@@ -42,12 +54,15 @@ void send_irq() {
   digitalWrite(IRQ, LOW);
   
 }
-
+/**
+ * @brief Interrupt routine, activates when CS goes low.
+ * 
+ */
 void IRAM_ATTR cs_interrupt() {
   last_data = read_dataport();
   last_a1 = digitalRead(A1);
   digitalWrite(IRQ, LOW);
-  delayMicroseconds(15000);
+  delayMicroseconds(IRQ_DELAY);
   digitalWrite(IRQ, HIGH);
 }
 void setup() {
@@ -93,23 +108,12 @@ attachInterrupt(CS, cs_interrupt, FALLING);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
  
- /*//poling for CS
- if (digitalRead(CS) == LOW) {
- data = read_dataport();
- digitalWrite(2, LOW);
- Serial.println(data);
- //Serial.println(digitalRead(RW));
- //Serial.println(digitalRead(CS));
- delay(100);
- digitalWrite(2, HIGH);
- }*/
  Serial.print("Last byte:");
  Serial.println(last_data);
  if (last_a1 != -1) {
    Serial.print("Last A1:");
    Serial.println(last_a1);
  }
- delay(2000);
+ delay(1000);
 }
