@@ -34,6 +34,9 @@
 uint8_t data = 0;
 uint8_t last_data = 0;
 int8_t last_a1 = -1;
+//** Dataport
+uint8_t dport[] = {D0, D1, D2, D3 ,D4 ,D5, D6, D7};  
+ 
 //** Functions
 
 /**
@@ -42,7 +45,6 @@ int8_t last_a1 = -1;
  * @return uint8_t 
  */
 uint8_t read_dataport() {
-  uint8_t dport[] = {D0, D1, D2, D3 ,D4 ,D5, D6, D7};  
   uint8_t d=0;
   for (int i=0;i<8;i++) {
     d = d | (digitalRead(dport[i]) << i);
