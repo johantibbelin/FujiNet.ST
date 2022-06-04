@@ -2,6 +2,7 @@
 #include <nvs_flash.h>
 #include <esp32/spiram.h>
 #include <esp32/himem.h>
+#include <driver/gpio.h>
 
 //* Signal PINs
 #define IRQ 35
@@ -28,7 +29,15 @@
 static uint8_t data_bus_pins[] = {D0, D1, D2,D3, D4, D5, D6, D7};
 
 
-void main_setup() {}
+void main_setup() {
+    /**
+     * Setting up GPIO pins
+     * 
+     */
+    /* Pins always in output*/
+    esp_err_t ret;
+    ret = gpio_set_direction(GPIO_NUM_35, GPIO_MODE_INPUT);
+}
 
 extern "C" {
 
