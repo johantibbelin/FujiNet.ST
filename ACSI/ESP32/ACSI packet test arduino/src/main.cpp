@@ -67,6 +67,30 @@ void IRAM_ATTR cs_interrupt() {
   delayMicroseconds(IRQ_DELAY);
   digitalWrite(IRQ, HIGH);
 }
+
+void IRAM_ATTR rw_interrupt_read() {
+  pinMode(D0, OUTPUT);
+  pinMode(D1, OUTPUT);
+  pinMode(D2, OUTPUT);
+  pinMode(D3, OUTPUT);
+  pinMode(D4, OUTPUT);
+  pinMode(D5, OUTPUT);
+  pinMode(D6, OUTPUT);
+  pinMode(D7, OUTPUT);
+ 
+}
+void IRAM_ATTR rw_interrupt_write() {
+  pinMode(D0, INPUT);
+  pinMode(D1, INPUT);
+  pinMode(D2, INPUT);
+  pinMode(D3, INPUT);
+  pinMode(D4, INPUT);
+  pinMode(D5, INPUT);
+  pinMode(D6, INPUT);
+  pinMode(D7, INPUT);
+ 
+}
+
 void setup() {
   // Setup serial
   Serial.begin(9600);
@@ -107,6 +131,8 @@ void setup() {
 // setup interrupt
 attachInterrupt(CS, cs_interrupt, FALLING);
 
+attachInterrupt(RW, rw_interrupt_read, RISING);
+attachInterrupt(RW, rw_interrupt_write, FALLING);
 }
 
 void loop() {
