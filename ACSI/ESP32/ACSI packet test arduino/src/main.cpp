@@ -36,7 +36,21 @@ uint8_t last_data = 0;
 int8_t last_a1 = -1;
 //** Dataport
 uint8_t dport[] = {D0, D1, D2, D3 ,D4 ,D5, D6, D7};  
- 
+
+//** Inquery response
+static unsigned char inquiry_bytes[] =
+{
+	0,                /* device type 0 = direct access device */
+	0,                /* device type qualifier (nonremovable) */
+	1,                /* ACSI/SCSI version */
+	0,                /* reserved */
+	31,               /* length of the following data */
+	0, 0, 0,          /* Vendor specific data */
+	'A','C','S','I','2','E','S','P',    /* Vendor ID */
+	'3','2',' ','h','a','r','d','d',    /* Product ID 1 */
+	'r','i','v','e',' ','1','.','2',    /* Product ID 2 */
+	'M','B',' ',' ',                    /* Revision */
+}; 
 //** Functions
 
 /**
