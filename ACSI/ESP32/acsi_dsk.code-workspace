@@ -27,6 +27,10 @@
         {
             "name": "fujinet-platformio",
             "path": "../../../../../../../../git/fujinet-platformio"
+        },
+        {
+            "name": "logic_analyzer",
+            "path": "../../tools/logic_analyzer/logic_analyzer"
         }
     ]
 }
