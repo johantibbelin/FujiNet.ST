@@ -36,7 +36,7 @@ uint8_t last_data = 0;
 int8_t last_a1 = -1;
 //** Dataport
 uint8_t dport[] = {D0, D1, D2, D3 ,D4 ,D5, D6, D7};  
-
+uint8_t command;
 //** Inquery response
 static unsigned char inquiry_bytes[] =
 {
@@ -150,7 +150,7 @@ attachInterrupt(RW, rw_interrupt_write, FALLING);
 }
 
 void loop() {
- 
+ // Recive packet
  Serial.print("Last byte:");
  Serial.println(last_data);
  if (last_a1 != -1) {
