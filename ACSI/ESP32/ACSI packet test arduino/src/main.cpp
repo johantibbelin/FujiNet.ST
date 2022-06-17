@@ -77,6 +77,7 @@ void send_irq() {
 void IRAM_ATTR cs_interrupt() {
   last_data = read_dataport();
   last_a1 = digitalRead(A1);
+  if (last_a1 == LOW) {}
   digitalWrite(IRQ, LOW);
   delayMicroseconds(IRQ_DELAY);
   digitalWrite(IRQ, HIGH);
