@@ -37,6 +37,8 @@ int8_t last_a1 = -1;
 //** Dataport
 uint8_t dport[] = {D0, D1, D2, D3 ,D4 ,D5, D6, D7};  
 uint8_t command;
+uint8_t num_of_packets=0;
+uint8_t packet_byte_counter=0;
 //** Inquery response
 static unsigned char inquiry_bytes[] =
 {
@@ -77,7 +79,9 @@ void send_irq() {
 void IRAM_ATTR cs_interrupt() {
   last_data = read_dataport();
   last_a1 = digitalRead(A1);
-  if (last_a1 == LOW) {}
+  if (last_a1 == LOW) {
+
+  }
   digitalWrite(IRQ, LOW);
   delayMicroseconds(IRQ_DELAY);
   digitalWrite(IRQ, HIGH);
