@@ -1,0 +1,45 @@
+' **
+' *    ACC and PRG in one (hopfully)
+' *
+'
+RESERVE 32000
+is_acc=-1
+ap_id&=APPL_INIT()
+IF ap_id&=0
+  is_acc=0
+  fn_menu
+  END
+ELSE
+  is_acc=1
+  acc_setup
+  acc_loop
+ENDIF
+PROCEDURE acc_setup
+  dummy=MENU_REGISTER(ap_id&,"   FujiNet Config")
+RETURN
+PROCEDURE acc_loop
+RETURN
+PROCEDURE fn_menu
+  ' get screenres and set variables accordingly
+  res&=XBIOS(4)
+  IF res&=0
+    planes&=4
+    w&=320
+    h&=200
+  ELSE IF res&=1
+    planes&=2
+    w&=640
+    h&=200
+  ELSE IF res&=2
+    planes&=1
+    w&=640
+    h&=400
+  ELSE
+    ' Fallback
+  ENDIF
+  IF is_acc=1
+    GET 0,0,w&,h&,s_scr$
+  ENDIF
+  PRINT CHR$(27)+"E"
+  PRINT "FujiNet Config"
+RETURN
