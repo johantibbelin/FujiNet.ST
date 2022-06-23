@@ -2,7 +2,7 @@
 ' *    ACC and PRG in one (hopfully)
 ' *
 '
-RESERVE 32000
+RESERVE 40000
 is_acc=-1
 ap_id&=APPL_INIT()
 IF ap_id&=0
@@ -37,9 +37,15 @@ PROCEDURE fn_menu
   ELSE
     ' Fallback
   ENDIF
+  ' *** if ACC save screen
   IF is_acc=1
     GET 0,0,w&,h&,s_scr$
   ENDIF
+  ' clear screen
   PRINT CHR$(27)+"E"
   PRINT "FujiNet Config"
+  dummy=INP(2)
+  IF is_acc=1
+    PUT 0,0,s_scr$
+  ENDIF
 RETURN
