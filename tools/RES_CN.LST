@@ -28,7 +28,7 @@ DIM xdbl%(16)
 CLS
 HIDEM
 precalc_words
-' to_mono
+to_mono
 dx_word
 END
 '
@@ -51,35 +51,37 @@ SDPOKE &HFF8242,&H222
 SDPOKE &HFF8244,&H444
 SDPOKE &HFF8246,&H0
 HIDEM
-FOR bitp%=0 TO 1
-  logo%=l1%
-  scr%=XBIOS(2)
-  IF bitp%=1
-    scr%=scr%+2
-    logo%=logo%+2
-  ENDIF
-  FOR l%=0 TO 50
-    FOR w%=0 TO 10
-      b%=PEEK(logo%)
-      n1%=SHR(b%,4)
-      n2%=b% AND &HF
-      b2%=PEEK(logo%+1)
-      n3%=SHR(b2%,4)
-      n4%=b2% AND &HF
-      IF debug&=1
-        PRINT AT(5,17);"Line:";l%;" word:";w%
-        PRINT AT(5,18);"Bytes:";b%;",";b2%;"   Nibbles:";n1%,",";n2%;",";n3%;",";n4%;"      "
-        dummy%=INP(2)
-      ENDIF
-      POKE scr%,xdbl%(n1%)
-      POKE scr%+1,xdbl%(n2%)
-      POKE scr%+8,xdbl%(n3%)
-      POKE scr%+9,xdbl%(n4%)
-      scr%=scr%+16
-      logo%=logo%+8
-    NEXT w%
-  NEXT l%
-NEXT bitp%
+PROCEDURE dx_byte
+  FOR bitp%=0 TO 1
+    logo%=l1%
+    scr%=XBIOS(2)
+    IF bitp%=1
+      scr%=scr%+2
+      logo%=logo%+2
+    ENDIF
+    FOR l%=0 TO 50
+      FOR w%=0 TO 10
+        b%=PEEK(logo%)
+        n1%=SHR(b%,4)
+        n2%=b% AND &HF
+        b2%=PEEK(logo%+1)
+        n3%=SHR(b2%,4)
+        n4%=b2% AND &HF
+        IF debug&=1
+          PRINT AT(5,17);"Line:";l%;" word:";w%
+          PRINT AT(5,18);"Bytes:";b%;",";b2%;"   Nibbles:";n1%,",";n2%;",";n3%;",";n4%;"      "
+          dummy%=INP(2)
+        ENDIF
+        POKE scr%,xdbl%(n1%)
+        POKE scr%+1,xdbl%(n2%)
+        POKE scr%+8,xdbl%(n3%)
+        POKE scr%+9,xdbl%(n4%)
+        scr%=scr%+16
+        logo%=logo%+8
+      NEXT w%
+    NEXT l%
+  NEXT bitp%
+RETURN
 PROCEDURE precalc_bytes
   DIM bytes%(16)
   FOR i%=0 TO 15
@@ -173,10 +175,10 @@ PROCEDURE to_mono
     FOR w%=0 TO 10
       w1%=DPEEK(logo%)
       w2%=DPEEK(logo%+2)
-      t%=w1% AND w2%
+      t%=w1% OR w2%
       DPOKE logo%,t%
       DPOKE logo%+2,t%
-      logo%=logo%+4
+      logo%=logo%+8
     NEXT w%
   NEXT l%
 RETURN
