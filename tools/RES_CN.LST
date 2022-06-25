@@ -1,0 +1,179 @@
+'
+' Logo for all res routines
+'
+' ** Debug mode
+debug&=0
+'
+'
+DIM logo1%(80*55/4)
+l1%=V:logo1%(0)
+BLOAD "I:FN320PX2.PI1",XBIOS(2)-34
+' move logo
+scr%=XBIOS(2)
+logo%=l1%
+FOR i%=0 TO 54
+  BMOVE scr%,logo%,80
+  scr%=scr%+160
+  logo%=logo%+80
+NEXT i%
+SHOWM
+WHILE MOUSEK<>2
+  PRINT AT(10,10);MOUSEX;",";MOUSEY;"       "
+WEND
+DIM xdbl%(16)
+'
+'
+'
+CLS
+HIDEM
+precalc_words
+to_mono
+dx_word
+END
+'
+'
+'
+RESTORE ddata
+FOR i%=0 TO 15
+  READ d%
+  xdbl%(i%)=d%
+NEXT i%
+ddata:
+DATA 0,3,12,15,48,51,60,63,192,195,204,207,240,243,252,255
+'
+'
+'
+' *** clear screen
+CLS
+' ** set colors
+SDPOKE &HFF8242,&H222
+SDPOKE &HFF8244,&H444
+SDPOKE &HFF8246,&H0
+HIDEM
+FOR bitp%=0 TO 1
+  logo%=l1%
+  scr%=XBIOS(2)
+  IF bitp%=1
+    scr%=scr%+2
+    logo%=logo%+2
+  ENDIF
+  FOR l%=0 TO 50
+    FOR w%=0 TO 10
+      b%=PEEK(logo%)
+      n1%=SHR(b%,4)
+      n2%=b% AND &HF
+      b2%=PEEK(logo%+1)
+      n3%=SHR(b2%,4)
+      n4%=b2% AND &HF
+      IF debug&=1
+        PRINT AT(5,17);"Line:";l%;" word:";w%
+        PRINT AT(5,18);"Bytes:";b%;",";b2%;"   Nibbles:";n1%,",";n2%;",";n3%;",";n4%;"      "
+        dummy%=INP(2)
+      ENDIF
+      POKE scr%,xdbl%(n1%)
+      POKE scr%+1,xdbl%(n2%)
+      POKE scr%+8,xdbl%(n3%)
+      POKE scr%+9,xdbl%(n4%)
+      scr%=scr%+16
+      logo%=logo%+8
+    NEXT w%
+  NEXT l%
+NEXT bitp%
+PROCEDURE precalc_bytes
+  DIM bytes%(16)
+  FOR i%=0 TO 15
+    t%=0
+    IF BTST(i%,0)=TRUE
+      t%=t%+3
+    ENDIF
+    IF BTST(i%,1)=TRUE
+      t%=t%+12
+    ENDIF
+    IF BTST(i%,2)=TRUE
+      t%=t%+48
+    ENDIF
+    IF BTST(i%,3)=TRUE
+      t%=t%+192
+    ENDIF
+    bytes%(i%)=t%
+  NEXT i%
+  IF debug&=1
+    PRINT
+    FOR i%=0 TO 15
+      PRINT bytes%(i%);",";
+    NEXT i%
+  ENDIF
+RETURN
+PROCEDURE precalc_words
+  DIM words%(255)
+  FOR i%=0 TO 255
+    t%=0
+    IF BTST(i%,0)=TRUE
+      t%=t%+3
+    ENDIF
+    IF BTST(i%,1)=TRUE
+      t%=t%+12
+    ENDIF
+    IF BTST(i%,2)=TRUE
+      t%=t%+48
+    ENDIF
+    IF BTST(i%,3)=TRUE
+      t%=t%+192
+    ENDIF
+    IF BTST(i%,4)=TRUE
+      t%=t%+768
+    ENDIF
+    IF BTST(i%,5)=TRUE
+      t%=t%+3072
+    ENDIF
+    IF BTST(i%,6)=TRUE
+      t%=t%+12288
+    ENDIF
+    IF BTST(i%,7)=TRUE
+      t%=t%+49152
+    ENDIF
+    words%(i%)=t%
+  NEXT i%
+  IF debug&=1
+    PRINT
+    FOR i%=0 TO 255
+      PRINT HEX$(words%(i%));",";
+    NEXT i%
+  ENDIF
+RETURN
+PROCEDURE dx_word
+  FOR bitp%=0 TO 1
+    logo%=l1%
+    scr%=XBIOS(2)
+    IF bitp%=1
+      scr%=scr%+2
+      logo%=logo%+2
+    ENDIF
+    FOR l%=0 TO 50
+      '     startl%=scr%
+      FOR w%=0 TO 10
+        b1%=PEEK(logo%)
+        b2%=PEEK(logo%+1)
+        DPOKE scr%,words%(b1%)
+        DPOKE scr%+8,words%(b2%)
+        logo%=logo%+8
+        scr%=scr%+16
+      NEXT w%
+      BMOVE scr%-160,scr%,160
+      scr%=scr%+160
+    NEXT l%
+  NEXT bitp%
+RETURN
+PROCEDURE to_mono
+  logo%=l1%
+  FOR l%=0 TO 54
+    FOR w%=0 TO 10
+      w1%=DPEEK(logo%)
+      w2%=DPEEK(logo%+2)
+      t%=w1% AND w2%
+      DPOKE logo%,t%
+      DPOKE logo%+2,t%
+      logo%=logo%+4
+    NEXT w%
+  NEXT l%
+RETURN
