@@ -3,7 +3,8 @@
 '
 ' ** Debug mode
 debug&=0
-'
+' ** Double hight
+x2h&=0
 '
 DIM logo1%(80*55/4)
 l1%=V:logo1%(0)
@@ -27,7 +28,7 @@ DIM xdbl%(16)
 CLS
 HIDEM
 precalc_words
-to_mono
+' to_mono
 dx_word
 END
 '
@@ -159,8 +160,10 @@ PROCEDURE dx_word
         logo%=logo%+8
         scr%=scr%+16
       NEXT w%
-      BMOVE scr%-160,scr%,160
-      scr%=scr%+160
+      IF x2h&=1
+        BMOVE scr%-160,scr%,160
+        scr%=scr%+160
+      ENDIF
     NEXT l%
   NEXT bitp%
 RETURN
