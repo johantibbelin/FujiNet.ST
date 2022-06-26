@@ -33,6 +33,7 @@ SDPOKE &HFF8246,&H0
 precalc_words
 to_mono
 dx_word
+sav_mono_image
 END
 '
 '
@@ -185,7 +186,7 @@ PROCEDURE to_mono
     NEXT w%
   NEXT l%
 RETURN
-PROCEDURE save_mono_image
+PROCEDURE sav_mono_image
   scr%=XBIOS(2)
   DIM monoimg%(32034/4)
   mono%=V:monoimg%(0)+34
@@ -203,7 +204,8 @@ PROCEDURE save_mono_image
   NEXT l%
   ' *** create header
   mono%=V:monoimg%(0)
-  DPOKE mono%,&H2
+  POKE mono%,0
+  POKE mono%+1,2
   FOR i%=0 TO 15
     DPOKE (mono%+2)+i%*2,0
   NEXT i%
