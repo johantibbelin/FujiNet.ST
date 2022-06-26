@@ -4,7 +4,7 @@
 ' ** Debug mode
 debug&=0
 ' ** Double hight
-x2h&=0
+x2h&=1
 '
 DIM logo1%(80*55/4)
 l1%=V:logo1%(0)
@@ -27,6 +27,9 @@ DIM xdbl%(16)
 '
 CLS
 HIDEM
+SDPOKE &HFF8242,&H222
+SDPOKE &HFF8244,&H444
+SDPOKE &HFF8246,&H0
 precalc_words
 to_mono
 dx_word
@@ -181,4 +184,28 @@ PROCEDURE to_mono
       logo%=logo%+8
     NEXT w%
   NEXT l%
+RETURN
+PROCEDURE save_mono_image
+  scr%=XBIOS(2)
+  DIM monoimg%(32034/4)
+  mono%=V:monoimg%(0)+34
+  FOR l%=0 TO 120
+    FOR w%=0 TO 19
+      w1%=DPEEK(scr%)
+      DPOKE mono%,w1%
+      scr%=scr%+8
+      mono%=mono%+2
+    NEXT w%
+    FOR pw%=0 TO 19
+      DPOKE mono%,0
+      mono%=mono%+2
+    NEXT pw%
+  NEXT l%
+  ' *** create header
+  mono%=V:monoimg%(0)
+  DPOKE mono%,&H2
+  FOR i%=0 TO 15
+    DPOKE (mono%+2)+i%*2,0
+  NEXT i%
+  BSAVE "I:FN_MONO.PI3",V:mono%,32034
 RETURN
