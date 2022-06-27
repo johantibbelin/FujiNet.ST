@@ -179,9 +179,11 @@ PROCEDURE to_mono
     FOR w%=0 TO 10
       w1%=DPEEK(logo%)
       w2%=DPEEK(logo%+2)
-      t%=w1% OR w2%
+      t%=OR(w1%,w2%)
       DPOKE logo%,t%
       DPOKE logo%+2,t%
+      '     DPOKE logo%+4,t%
+      '      DPOKE logo%+6,t%
       logo%=logo%+8
     NEXT w%
   NEXT l%
