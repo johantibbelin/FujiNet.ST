@@ -1,0 +1,9 @@
+DIM monoimg%(32034/4)
+img%=V:monoimg%(0)
+FOR i%=0 TO 32034/4
+  monoimg%(i%)=0
+NEXT i%
+BLOAD "I:fn_mono.pi3",XBIOS(2)-34
+POKE img%+1,2
+BMOVE XBIOS(2),img%+34,32000
+BSAVE "fn.pi3",img%,32034
