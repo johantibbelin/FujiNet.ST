@@ -4,9 +4,35 @@ FOR i%=0 TO 32034/4
   monoimg%(i%)=0
 NEXT i%
 BLOAD "I:fn_mono.pi3",XBIOS(2)-34
+' mov_logo
+' mouse_cordinates
+SHOWM
+x%=0
+y%=0
+w%=0
+h%=0
+dragbox(x%,y%,w%,h%)
+mov_logo(x%,y%,w%,h%)
 ' ** High resolution image
 POKE img%+1,2
 ' ** white background
 DPOKE img%+2,&HFFF
 BMOVE XBIOS(2),img%+34,32000
 BSAVE "i:fn.pi3",img%,32034
+PROCEDURE mouse_cordinates
+  WHILE MOUSEK<>2
+    PRINT AT(5,19);MOUSEX;",";MOUSEY;"     ";
+  WEND
+RETURN
+PROCEDURE mov_logo(x%,y%,w%,h%)
+  GET x%,y%,x%+w%,y%+h%,p$
+  CLS
+  PUT 0,0,p$
+RETURN
+PROCEDURE dragbox(VAR x%,y%,w%,h%)
+  WHILE MOUSEK<>1
+    x%=MOUSEX
+    y%=MOUSEY
+  WEND
+  ~GRAF_RUBBERBOX(x%,y%,1,1,w%,h%)
+RETURN
