@@ -9,3 +9,7 @@ Test programs and tools.
 2. fujinet.sys - fujinet drivers and boot program
 3. fujinet.acc - menu program for mounting disk images 
 4. printer spooler sending printed pages to fujinet
+
+## Languages used
+
+C,C++, 68k assembly and GFA Basic
