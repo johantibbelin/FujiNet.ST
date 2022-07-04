@@ -3,7 +3,12 @@ img%=V:monoimg%(0)
 FOR i%=0 TO 32034/4
   monoimg%(i%)=0
 NEXT i%
-BLOAD "I:fn_mono.pi3",XBIOS(2)-34
+FILESELECT "A:\*.PI3","",file$
+IF file$=""
+  ALERT 3,"No file selected.",1,"Quit",dummy%
+  END
+ENDIF
+BLOAD file$,XBIOS(2)-34
 ' mov_logo
 ' mouse_cordinates
 SHOWM
@@ -17,8 +22,13 @@ mov_logo(x%,y%,w%,h%)
 POKE img%+1,2
 ' ** white background
 DPOKE img%+2,&HFFF
+FILESELECT "A:\*.PI3","",file$
+IF file$=""
+  ALERT 3,"No file selected.",1,"Quit",dummy%
+  END
+ENDIF
 BMOVE XBIOS(2),img%+34,32000
-BSAVE "i:fn.pi3",img%,32034
+BSAVE file$,img%,32034
 PROCEDURE mouse_cordinates
   WHILE MOUSEK<>2
     PRINT AT(5,19);MOUSEX;",";MOUSEY;"     ";
@@ -30,9 +40,6 @@ PROCEDURE mov_logo(x%,y%,w%,h%)
   PUT 0,0,p$
 RETURN
 PROCEDURE dragbox(VAR x%,y%,w%,h%)
-  WHILE MOUSEK<>1
-    x%=MOUSEX
-    y%=MOUSEY
-  WEND
+  ~EVNT_BUTTON(1,1,1,x%,y%,bu%,kb%)
   ~GRAF_RUBBERBOX(x%,y%,1,1,w%,h%)
 RETURN
