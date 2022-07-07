@@ -86,10 +86,10 @@ write:
 
 	moveq.l #2,d1
 	add.l hz200,d1
-
+;**	Wait 20 microseconds
 del20mic:cmp.l hz200,d1
 	bge del20mic
-
+;**	Timeout is 3 seconds
 	move.l #600,d1
 	add.l hz200,d1
 
