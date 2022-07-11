@@ -8,6 +8,7 @@
 
 Written in C
 Works both as an .ACC and a bootable .PRG program
+Test program written in GFA Basic.
 
 ## fujinet.sys
 Drivers for fujinet includes:
