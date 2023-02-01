@@ -23,6 +23,10 @@
 #define D6 19
 #define D7 21
 
+//* SPI for SD card reader
+// VSPI 23,19,18,5 
+// 23,5 
+
 //* Non ACSI PINs
 #define LED 23
 //* Data bus pins

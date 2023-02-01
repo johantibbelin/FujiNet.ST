@@ -15,8 +15,8 @@
 #define D0 13
 #define D1 14
 #define D2 15
-#define D3 12
-#define D4 32
+#define D3 12   /* 16 not available on WROVER */
+#define D4 32   /* 17 not avalable on WROVER */
 #define D5 18
 #define D6 19
 #define D7 21
@@ -39,6 +39,8 @@ uint8_t dport[] = {D0, D1, D2, D3 ,D4 ,D5, D6, D7};
 uint8_t command;
 uint8_t num_of_packets=0;
 uint8_t packet_byte_counter=0;
+uint8_t cs_pulses=0;
+uint8_t acsi_data[16];
 //** Inquery response
 static unsigned char inquiry_bytes[] =
 {
@@ -79,9 +81,16 @@ void send_irq() {
 void IRAM_ATTR cs_interrupt() {
   last_data = read_dataport();
   last_a1 = digitalRead(A1);
+  cs_pulses++;
   if (last_a1 == LOW) {
 
   }
+  if (cs_pulses > 0) {
+    acsi_data[cs_pulses-1]=last_data;
+    
+  }
+  if (cs_pulses== 16)
+    cs_pulses=0;
   digitalWrite(IRQ, LOW);
   delayMicroseconds(IRQ_DELAY);
   digitalWrite(IRQ, HIGH);
@@ -146,7 +155,14 @@ void setup() {
   digitalWrite(LED, LOW);
   
   //Set IRQ high (active low)
-  digitalWrite(IRQ, HIGH); 
+  digitalWrite(IRQ, HIGH);
+
+// clear data
+int i;
+for (i=0;i<16;i++) {
+  acsi_data[i] = 0;
+}
+
 // setup interrupt
 attachInterrupt(CS, cs_interrupt, FALLING);
 
@@ -162,5 +178,15 @@ void loop() {
    Serial.print("Last A1:");
    Serial.println(last_a1);
  }
- delay(1000);
+ if (cs_pulses > 0) {
+  Serial.print("CS pulses:");
+  Serial.println(cs_pulses);
+ }
+ delay(5000);
+ int i;
+ for (i=0;i<16;i++) {
+  Serial.print(acsi_data[i]);
+  Serial.print(",");
+ }
+ Serial.println();
 }

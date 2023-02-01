@@ -62,18 +62,19 @@ start:
 
 	move.l #255,d6
 	move.l d6,d7
+	move.l #15,d6
 ;**	Reset dma - toggle
 
 	swap d7
-	move.w #$188,d7
+	move.w #$190,d7
 
 write:
 ;**	write text
 
-	move.l #send_txt,-(sp)
-	move.w #9,-(sp)
-	trap #1
-	addq.l #6,sp
+;	move.l #send_txt,-(sp)
+;	move.w #9,-(sp)
+;	trap #1
+;	addq.l #6,sp
 
 	move.w #$088,dma
 	move.w #$188,dma
@@ -110,18 +111,18 @@ exit:
 	swap d7
 	sub.w #1,d7
 	swap d7
-	move.l #irq_txt,-(sp)
-	move.w #9,-(sp)
-	trap #1
-	addq.l #6,sp
+;	move.l #irq_txt,-(sp)
+;	move.w #9,-(sp)
+;	trap #1
+;	addq.l #6,sp
 
 ;waitlo:	btst.b #5,gpip
 ;	bne waitlo
 
-	move.l #irq_res,-(sp)
-	move.w #9,-(sp)
-	trap #1
-	addq.l #6,sp
+;	move.l #irq_res,-(sp)
+;	move.w #9,-(sp)
+;	trap #1
+;	addq.l #6,sp
 
 	move.l #100,d1
 	add.l hz200,d1
@@ -129,12 +130,20 @@ exit:
 	bge .w2
 	dbra d6,write
 
+;**	Print done txt
+
+	move.l #done_txt,-(sp)
+	move.w #9,-(sp)
+	trap #1
+	addq.l #6,sp
+
 ;**	wait key
 	
 nej	cmp.b #$39,$fffc02
 	bne nej
 
 	sf flock ; Enable fdc again
+
 
 ;	leave supervisor mode	
 
@@ -164,5 +173,7 @@ packr_txt:
 	dc.b 10,13,"Packet recived.",10,13,0
 timeout_txt:
 	dc.b 10,13,"Timeout, ack not recieved.",10,13,0 
+done_txt:
+	dc.b 10,13,"Transfer done.",10,13,0
 s_sp:	ds.l 1
 buffer:	ds.b 1024
